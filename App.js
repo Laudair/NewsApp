@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     const fetchNews = async () => {
       const response = await axios.get(
-        'https://newsapi.org/v2/everything?q=tesla&from=2021-03-23&sortBy=publishedAt&apiKey=b87051b16e404e1bb92f0d59380c310d',
+        'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=b87051b16e404e1bb92f0d59380c310d',
       );
       /**
        * status: 'ok',
@@ -36,7 +36,7 @@ const App = () => {
       style={{
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: 300,
+        paddingTop: 70,
       }}>
       <Home news={news} />
     </View>
