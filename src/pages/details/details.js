@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, ScrollView, Image} from 'react-native';
+import {Text, View, ScrollView, Image, Linking} from 'react-native';
 
 const Details = ({route, navigation}) => {
   // const handleOnCardPress = article => {
@@ -17,7 +17,8 @@ const Details = ({route, navigation}) => {
             marginLeft: 8,
             marginRight: 8,
             marginTop: 8,
-          }}>
+          }}
+          onPress={() => Linking.openURL(url)}>
           {title}
         </Text>
         <Text
