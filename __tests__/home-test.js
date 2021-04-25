@@ -1,20 +1,30 @@
 import React from 'react';
-import Home from '../src/pages/home';
-import {render, fireEvent} from '@testing-library/react-native';
+import Card from '../src/components/card';
+import {render} from '@testing-library/react-native';
 
-it('Renders hello world', () => {
-  const {getByText} = render(<Home news={[{title: 'Fodase'}]} />);
-  const text = getByText('Fodase');
-  expect(text).toBeDefined();
+jest.mock('@react-navigation/native');
+const article = {
+  title: 'Article Title',
+  publishedAt: '2021-04-25',
+  content: 'LoremIpsum',
+  author: 'AuthorName',
+  urlToImage: 'url to image',
+  url:
+    'https://nypost.com/2021/04/24/new-federal-regulations-could-spur-cryptocurrency-crash/',
+};
+
+it('Renders Date', () => {
+  const {getByText} = render(<Card article={article} />);
+  const date = getByText('April, 25');
+  expect(date).toBeDefined();
 });
-// // <Text testID="title-hyperlink"
-// const news = {
-//   title: 'fodase'
-// }
-
-// it('Renders details page', () =>{
-//   const {getByTestId} = render(<Details news={news} />);
-//   const text = getByTestId(`title-hyperlink-${news.title}`);
-//   // fireEvent.press(text); se der brincar e ver um teste
-//   expect(text).toBeDefined();
-// })
+it('Renders title', () => {
+  const {getByText} = render(<Card article={article} />);
+  const title = getByText('Article Title');
+  expect(title).toBeDefined();
+});
+it('Renders Author', () => {
+  const {getByText} = render(<Card article={article} />);
+  const author = getByText('AuthorName');
+  expect(author).toBeDefined();
+});
