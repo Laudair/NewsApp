@@ -20,8 +20,7 @@ interface Props {
   article: News;
 }
 
-const Card: React.FC<Props> = props => {
-  const navigation = useNavigation<navigateHome>();
+export const filterDate = date => {
   const monthNames = [
     'January',
     'February',
@@ -36,11 +35,55 @@ const Card: React.FC<Props> = props => {
     'November',
     'December',
   ];
-  const screen = Dimensions.get('window');
 
-  const articleDate = new Date(props.article.publishedAt);
+  const articleDate = new Date(date);
   const articleMonth: string = monthNames[articleDate.getMonth()];
-  const articleDay: string = props.article.publishedAt.substring(8, 10);
+  const articleDay: string = date.substring(8, 10);
+
+  return articleMonth + ', ' + articleDay;
+};
+
+export const Item = ({item}) => {
+  const navigation = useNavigation<navigateHome>();
+  const navigateToDetails = () => {
+    navigation.navigate('Details', {
+      article: item,
+    });
+  };
+
+  return (
+    <View
+      style={{
+        width: 220,
+        margin: 8,
+        backgroundColor: '#eaeaea',
+        borderRadius: 8,
+      }}>
+      {item.urlToImage && (
+        <Image
+          style={{
+            width: 220,
+            height: 118,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+          }}
+          source={{
+            uri: item.urlToImage,
+          }}
+        />
+      )}
+      <Text
+        style={{color: 'black', fontWeight: 'bold', margin: 8}}
+        onPress={() => navigateToDetails()}>
+        {item.title}
+      </Text>
+    </View>
+  );
+};
+const Card: React.FC<Props> = props => {
+  const navigation = useNavigation<navigateHome>();
+
+  const screen = Dimensions.get('window');
 
   const navigateToDetails = () => {
     navigation.navigate('Details', {
@@ -70,7 +113,7 @@ const Card: React.FC<Props> = props => {
           {authorName}
         </Text>
 
-        <Text>{articleMonth + ', ' + articleDay}</Text>
+        <Text>{filterDate(props.article.publishedAt)}</Text>
       </View>
       {props.article.urlToImage ? (
         <Image
