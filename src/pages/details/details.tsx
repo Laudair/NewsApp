@@ -14,29 +14,12 @@ import {
 
 import {RootStackParamList} from './../routes/route-param-list';
 import {StackScreenProps} from '@react-navigation/stack';
+import {filterDate} from './../../components/card/card';
 
 type Props = StackScreenProps<RootStackParamList, 'Details'>;
 
 const Details: React.FC<Props> = ({route}) => {
   const {article} = route.params;
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
-  const articleDate = new Date(article.publishedAt);
-  const articleMonth: string = monthNames[articleDate.getMonth()];
-  const articleDay: string = article.publishedAt.substring(8, 10);
 
   const authorName: string = article.author ? article.author : 'Unknown auhtor';
 
@@ -47,7 +30,7 @@ const Details: React.FC<Props> = ({route}) => {
           {article.title}
         </Text>
         <Text style={styles.smallText}>{authorName}</Text>
-        <Text style={styles.smallText}>{articleMonth + ', ' + articleDay}</Text>
+        <Text style={styles.smallText}>{filterDate(article.publishedAt)}</Text>
         {article.urlToImage && (
           <Image
             style={styles.image}
